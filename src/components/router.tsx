@@ -7,6 +7,7 @@ import ProtectedRoute from "./partials/ProtectedRoute";
 import Profile from "./pages/Profile";
 import Error from "./pages/Error";
 import PostDetail from "./pages/PostDetail";
+import NotFound from "./pages/NotFound";
 
 export const router = createBrowserRouter([
 	{
@@ -16,19 +17,24 @@ export const router = createBrowserRouter([
 				path: "/",
 				element: <Home />,
 			},
-			{
-				path: "/error",
-				element: <Error />,
-			},
+
 			{
 				path: "/login",
 				element: <Login />,
 			},
 			{
+				path: "/error",
+				element: <Error />,
+			},
+			{
+				path: "/not-found",
+				element: <NotFound />,
+			},
+			{
 				element: <ProtectedRoute />,
 				children: [
 					{
-						path: "/profile/:id",
+						path: "/profile/:userId",
 						element: <Profile />,
 					},
 					{
@@ -37,7 +43,7 @@ export const router = createBrowserRouter([
 					},
 
 					{
-						path: "/post/:id",
+						path: "/post/:postId",
 						element: <PostDetail />,
 					},
 				],

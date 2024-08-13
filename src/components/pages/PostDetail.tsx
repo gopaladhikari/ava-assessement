@@ -1,18 +1,32 @@
 import { useQuery } from "@tanstack/react-query";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { getPost } from "../../lib/query";
+import { MaxWidthWrapper } from "../partials/MaxWidthWrapper";
+
+type Params = {
+	postId?: string;
+};
 
 export default function PostDetail() {
-	const { pathname } = useLocation();
+	const { postId } = useParams<Params>();
 
-	const id = pathname.split("/").pop();
-
-	if (!id) return <Navigate to="/feed" />;
+	if (!postId) return <Navigate to="/feed" />;
 
 	const { data, isError } = useQuery({
-		queryKey: ["post", id],
-		queryFn: () => getPost(id),
+		queryKey: ["post", postId],
+		queryFn: () => getPost(postId),
 	});
 
-	return <div>PostDetail</div>;
+	if (isError) return <Navigate to="/error" />;
+
+	return (
+		<main>
+			<section>
+				<MaxWidthWrapper className="">
+					<h1>{data?.title}</h1>
+					<p>{data?.body}</p>
+				</MaxWidthWrapper>
+			</section>
+		</main>
+	);
 }
