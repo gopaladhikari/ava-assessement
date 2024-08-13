@@ -13,8 +13,6 @@ export default function Login() {
 	const navigate = useNavigate();
 	const user = useAuth();
 
-	if (user) return <Navigate to="/feed" />;
-
 	const { mutate, error, isPending } = useMutation({
 		mutationFn: loginUser,
 		onSuccess: ({ id }) => {
@@ -36,6 +34,8 @@ export default function Login() {
 	const onSubmit: SubmitHandler<LoginSchema> = async ({ userId }) => {
 		mutate(userId);
 	};
+
+	if (user) return <Navigate to="/feed" />;
 
 	return (
 		<main>

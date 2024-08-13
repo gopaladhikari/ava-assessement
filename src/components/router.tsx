@@ -3,6 +3,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Feed from "./pages/Feed";
 import Layout from "./partials/Layout";
+import ProtectedRoute from "./partials/ProtectedRoute";
+import Profile from "./pages/Profile";
+import Error from "./pages/Error";
 
 export const router = createBrowserRouter([
 	{
@@ -13,12 +16,25 @@ export const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
+				path: "/error",
+				element: <Error />,
+			},
+			{
 				path: "/login",
 				element: <Login />,
 			},
 			{
-				path: "/feed",
-				element: <Feed />,
+				element: <ProtectedRoute />,
+				children: [
+					{
+						path: "/profile/:id",
+						element: <Profile />,
+					},
+					{
+						path: "/feed",
+						element: <Feed />,
+					},
+				],
 			},
 		],
 	},

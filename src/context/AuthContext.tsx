@@ -4,22 +4,32 @@ import cookie from "js-cookie";
 import { getUser } from "../lib/query";
 import { User } from "../types";
 
-const AuthContext = createContext<null | User>(null);
+type AuthContextType = {
+	user: null | User;
+	isLoading: boolean;
+};
+
+const AuthContext = createContext<null | AuthContextType>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [user, setUser] = useState<null | User>(null);
 	const userId = cookie.get("userId");
 
-	const { data } = useQuery({
+	const { data, isLoading } = useQuery({
 		queryKey: ["user"],
 		queryFn: () => (userId ? getUser(userId) : null),
 	});
 
 	useEffect(() => {
 		if (data) setUser(data);
+		else setUser(null);
 	}, [data]);
 
-	return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
+	return (
+		<AuthContext.Provider value={{ user, isLoading }}>
+			{children}
+		</AuthContext.Provider>
+	);
 }
 
 export function useAuth() {
