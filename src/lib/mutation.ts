@@ -35,3 +35,9 @@ export const createCommentOnPost = async (comment: Comment) => {
 
 	return data;
 };
+
+// Login a user, just fetching the user if available
+export const loginUser = async (userId: string) => {
+	const { data } = await axiosInstance.get<User>(`/users/${userId}`);
+	return data;
+};
