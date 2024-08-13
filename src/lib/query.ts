@@ -1,5 +1,5 @@
-import type { Post } from "@/types";
 import axios from "axios";
+import type { Post } from "../types";
 
 // Get all the posts from the API
 export const getPosts = async () => {

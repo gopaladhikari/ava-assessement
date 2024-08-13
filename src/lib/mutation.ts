@@ -1,5 +1,5 @@
-import type { Post, User, Comment } from "@/types";
 import axios from "axios";
+import type { User, Post } from "../types";
 
 // Update a user based on the id
 export const updateUser = async (user: User) => {
