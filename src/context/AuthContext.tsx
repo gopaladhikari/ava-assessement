@@ -1,35 +1,27 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import cookie from "js-cookie";
 import { getUser } from "../lib/query";
 import { User } from "../types";
 
 type AuthContextType = {
-	user: null | User;
+	user: null | User | undefined;
 	isLoading: boolean;
 };
 
-const AuthContext = createContext<null | AuthContextType>(null);
+const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-	const [user, setUser] = useState<null | User>(null);
 	const userId = cookie.get("userId");
 
-	const { data, isLoading } = useQuery({
-		queryKey: ["user"],
+	const { data: user, isLoading } = useQuery({
+		queryKey: ["user", userId],
 		queryFn: () => (userId ? getUser(userId) : null),
 	});
 
-	useEffect(() => {
-		if (data) setUser(data);
-		else setUser(null);
-	}, [data]);
+	const value = useMemo(() => ({ user, isLoading }), [user, isLoading]);
 
-	return (
-		<AuthContext.Provider value={{ user, isLoading }}>
-			{children}
-		</AuthContext.Provider>
-	);
+	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

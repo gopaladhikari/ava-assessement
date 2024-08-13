@@ -6,6 +6,7 @@ import Layout from "./partials/Layout";
 import ProtectedRoute from "./partials/ProtectedRoute";
 import Profile from "./pages/Profile";
 import Error from "./pages/Error";
+import PostDetail from "./pages/PostDetail";
 
 export const router = createBrowserRouter([
 	{
@@ -33,6 +34,11 @@ export const router = createBrowserRouter([
 					{
 						path: "/feed",
 						element: <Feed />,
+					},
+
+					{
+						path: "/post/:id",
+						element: <PostDetail />,
 					},
 				],
 			},

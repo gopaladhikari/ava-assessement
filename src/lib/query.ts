@@ -9,7 +9,7 @@ export const getPosts = async () => {
 };
 
 // Get a single post from the API
-export const getPost = async (id: number) => {
+export const getPost = async (id: string) => {
 	const { data } = await axiosInstance.get<Post>(`/posts/${id}`);
 
 	return data;
