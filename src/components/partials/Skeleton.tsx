@@ -6,8 +6,8 @@ type Props = {
 };
 
 export function Skeleton({ length = 3, className }: Props) {
-	const skeletons = Array.from({ length }, () => (
-		<div className="flex flex-col gap-4">
+	const skeletons = Array.from({ length }, (_, i) => (
+		<div className="flex flex-col gap-4" key={i}>
 			<div className="skeleton h-32 w-full"></div>
 			<div className="skeleton h-4 w-28"></div>
 			<div className="skeleton h-4 w-full"></div>

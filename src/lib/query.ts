@@ -1,4 +1,4 @@
-import type { Post, User } from "../types";
+import type { Post, User, Comment } from "../types";
 import { axiosInstance } from "../config/axios";
 
 // Get all the posts from the API
@@ -30,8 +30,8 @@ export const getPostsByUser = async (id: number) => {
 };
 
 // Get all comments of a post from the API
-export const getComments = async (id: number) => {
-	const { data } = await axiosInstance.get(`/comments?postId=${id}`);
+export const getCommentsOfPost = async (id: string) => {
+	const { data } = await axiosInstance.get<Comment[]>(`/comments?postId=${id}`);
 
 	return data;
 };

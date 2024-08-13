@@ -44,3 +44,11 @@ export type Comment = {
 	body: string;
 	postId: number;
 };
+
+export type Comment = {
+	postId: number;
+	id: number;
+	name: string;
+	email: string;
+	body: string;
+};
