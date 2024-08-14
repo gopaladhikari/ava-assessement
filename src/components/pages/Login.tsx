@@ -40,7 +40,7 @@ export default function Login() {
 	return (
 		<main>
 			<Metadata title="Login" description="Login to your account" />
-			<MaxWidthWrapper classNames="flex flex-col gap-4">
+			<MaxWidthWrapper className="flex flex-col gap-4">
 				<h1 className="text-center">Login</h1>
 
 				<form

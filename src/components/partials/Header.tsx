@@ -3,6 +3,7 @@ import { FaLongArrowAltRight, FaRegUser } from "react-icons/fa";
 import { MaxWidthWrapper } from "./MaxWidthWrapper";
 import { useAuth } from "../../context/AuthContext";
 import { site } from "../../config/constants";
+import { FaPlus } from "react-icons/fa6";
 
 export function Header() {
 	const data = useAuth();
@@ -21,29 +22,31 @@ export function Header() {
 					</div>
 					<div className="flex-none items-center">
 						{data?.user ? (
-							<div className="dropdown dropdown-end">
-								<div
-									tabIndex={0}
-									role="button"
-									className="avatar btn btn-circle btn-ghost"
-								>
-									<FaRegUser size={24} />
+							<>
+								<div className="dropdown dropdown-end">
+									<div
+										tabIndex={0}
+										role="button"
+										className="avatar btn btn-circle btn-ghost"
+									>
+										<FaRegUser size={24} />
+									</div>
+									<ul
+										tabIndex={0}
+										className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
+									>
+										<li>
+											<Link to={`/profile/${data?.user.id}`}>Profile</Link>
+										</li>
+										<li>
+											<a>Settings</a>
+										</li>
+										<li>
+											<a>Logout</a>
+										</li>
+									</ul>
 								</div>
-								<ul
-									tabIndex={0}
-									className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
-								>
-									<li>
-										<Link to={`/profile/${data?.user.id}`}>Profile</Link>
-									</li>
-									<li>
-										<a>Settings</a>
-									</li>
-									<li>
-										<a>Logout</a>
-									</li>
-								</ul>
-							</div>
+							</>
 						) : (
 							<div className="flex items-center gap-8">
 								<Link to="/login" className="btn btn-ghost">

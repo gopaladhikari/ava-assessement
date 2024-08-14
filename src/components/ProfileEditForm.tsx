@@ -42,7 +42,9 @@ export function ProfileEditForm({
 	const { mutate, isPending, isError, error } = useMutation({
 		mutationKey: ["updateUser"],
 		mutationFn: updateUser,
-		onSuccess: () => {
+		onSuccess: (data) => {
+			console.log(data);
+			alert("Profile updated successfully");
 			setShowForm(false);
 		},
 	});
