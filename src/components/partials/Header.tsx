@@ -3,10 +3,16 @@ import { FaLongArrowAltRight, FaRegUser } from "react-icons/fa";
 import { MaxWidthWrapper } from "./MaxWidthWrapper";
 import { useAuth } from "../../context/AuthContext";
 import { site } from "../../config/constants";
-import { FaPlus } from "react-icons/fa6";
+import cookie from "js-cookie";
 
 export function Header() {
 	const data = useAuth();
+
+	const handleLogout = () => {
+		data?.setIsLoading(true);
+		data?.setUser(null);
+		cookie.remove("userId");
+	};
 
 	return (
 		<header>
@@ -42,7 +48,7 @@ export function Header() {
 											<a>Settings</a>
 										</li>
 										<li>
-											<a>Logout</a>
+											<button onClick={handleLogout}>Logout</button>
 										</li>
 									</ul>
 								</div>

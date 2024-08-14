@@ -4,21 +4,26 @@ import { MaxWidthWrapper } from "../partials/MaxWidthWrapper";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../../lib/mutation";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Metadata } from "../partials/Metadata";
 import cookie from "js-cookie";
 import { useAuth } from "../../context/AuthContext";
+import { useEffect } from "react";
 
 export default function Login() {
+	const auth = useAuth();
 	const navigate = useNavigate();
-	const user = useAuth();
 
 	const { mutate, error, isPending } = useMutation({
 		mutationFn: loginUser,
-		onSuccess: ({ id }) => {
-			cookie.set("userId", String(id), {
+		onSuccess: (user) => {
+			auth?.setIsLoading(false);
+			auth?.setUser(user);
+
+			cookie.set("userId", String(user.id), {
 				expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
 			});
+
 			navigate("/feed");
 		},
 	});
@@ -31,11 +36,14 @@ export default function Login() {
 		resolver: zodResolver(loginSchema),
 	});
 
+	useEffect(() => {
+		if (auth?.user) navigate("/feed");
+	}, [auth?.isLoading]);
+
 	const onSubmit: SubmitHandler<LoginSchema> = async ({ userId }) => {
+		auth?.setIsLoading(true);
 		mutate(userId);
 	};
-
-	if (user) return <Navigate to="/feed" />;
 
 	return (
 		<main>
