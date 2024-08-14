@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FaLongArrowAltRight, FaRegUser } from "react-icons/fa";
 import { MaxWidthWrapper } from "./MaxWidthWrapper";
 import { useAuth } from "../../context/AuthContext";
+import { site } from "../../config/constants";
 
 export function Header() {
 	const data = useAuth();
@@ -15,7 +16,7 @@ export function Header() {
 							to={data?.user ? "/feed" : "/"}
 							className="text-xl font-bold text-primary md:text-2xl"
 						>
-							Ava Technology
+							{site.title}
 						</Link>
 					</div>
 					<div className="flex-none items-center">

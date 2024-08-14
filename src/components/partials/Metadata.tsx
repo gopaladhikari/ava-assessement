@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { site } from "../../config/constants";
 
 type Props = {
-	title: string;
+	title: string | undefined;
 	description: string;
 	image?: string;
 };

@@ -23,7 +23,14 @@ export default function Feed() {
 					<h1> Explore the latest posts </h1>
 
 					{isPending ? (
-						<Skeleton length={6} className="mt-6" />
+						<Skeleton
+							length={6}
+							className="mt-6 grid gap-8"
+							isCard
+							style={{
+								gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+							}}
+						/>
 					) : (
 						<div
 							className="mt-6 grid gap-8"
