@@ -2,7 +2,7 @@ import type { User, Post } from "../types";
 import { axiosInstance } from "../config/axios";
 
 // Update a user based on the id
-export const updateUser = async (user: User) => {
+export const updateUser = async (user: Omit<User, "address">) => {
 	const { data } = await axiosInstance.put(`/users/${user.id}`, user);
 
 	return data;

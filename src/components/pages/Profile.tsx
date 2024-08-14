@@ -4,9 +4,15 @@ import { getUser } from "../../lib/query";
 import { Metadata } from "../partials/Metadata";
 import { Skeleton } from "../partials/Skeleton";
 import { MaxWidthWrapper } from "../partials/MaxWidthWrapper";
+import { useAuth } from "../../context/AuthContext";
+import { useState } from "react";
+import { ProfileEditForm } from "../ProfileEditForm";
 
 export default function Profile() {
 	const { userId } = useParams();
+	const [showForm, setShowForm] = useState(false);
+
+	const userData = useAuth();
 
 	if (!userId) return <Navigate to="/not-found" />;
 
@@ -30,20 +36,35 @@ export default function Profile() {
 		<main>
 			<Metadata title={data?.name} description="Profile of user" />
 
-			<section>
-				<MaxWidthWrapper className="space-y-3">
-					<h1>{data?.name}</h1>
-					<p>{data?.username}</p>
-					<p>{data?.email}</p>
-					<p>{data?.phone}</p>
-					<address>
-						<p>{data?.address.street}</p>
-						<p>{data?.address.suite}</p>
-						<p>{data?.address.city}</p>
-						<p>{data?.address.zipcode}</p>
-					</address>
-				</MaxWidthWrapper>
-			</section>
+			<MaxWidthWrapper className="space-y-3">
+				{showForm ? (
+					<ProfileEditForm setShowForm={setShowForm} />
+				) : (
+					<>
+						<section className="space-y-1">
+							<h1> Name : {data?.name}</h1>
+							<p> Username : {data?.username}</p>
+							<p> Email : {data?.email}</p>
+							<p> Phone : {data?.phone}</p>
+						</section>
+
+						<address className="space-y-1">
+							<p> Street : {data?.address.street}</p>
+							<p> Suite : {data?.address.suite}</p>
+							<p> City : {data?.address.city}</p>
+							<p> Zip : {data?.address.zipcode}</p>
+						</address>
+
+						{userId === String(userData?.user?.id) && (
+							<section>
+								<button onClick={() => setShowForm(!showForm)} className="btn">
+									Edit
+								</button>
+							</section>
+						)}
+					</>
+				)}
+			</MaxWidthWrapper>
 		</main>
 	);
 }
