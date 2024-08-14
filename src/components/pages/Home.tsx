@@ -1,4 +1,3 @@
-import { Navigate } from "react-router-dom";
 import { site } from "../../config/constants";
 import { MaxWidthWrapper } from "../partials/MaxWidthWrapper";
 import { Metadata } from "../partials/Metadata";
